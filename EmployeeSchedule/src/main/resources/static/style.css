@@ -1,0 +1,11 @@
+.card{
+    width:13.2rem;
+    float: left;
+    margin: 5px 5px 5px 5px !important;
+}
+.row{
+    border-style: solid;
+    border-color: lightgray;
+    margin-top: 5px !important;
+}
+
