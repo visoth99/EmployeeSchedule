@@ -1,11 +1,12 @@
 .card{
-    width:13.2rem;
-    float: left;
+    width:14.5rem;
+    float: left !important;
     margin: 5px 5px 5px 5px !important;
+    text-align: left;
 }
-.row{
-    border-style: solid;
-    border-color: lightgray;
-    margin-top: 5px !important;
+
+.navbar-brand{
+    margin: auto !important;
 }
+
 
