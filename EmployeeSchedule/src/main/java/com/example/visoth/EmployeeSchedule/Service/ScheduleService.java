@@ -11,4 +11,5 @@ public interface ScheduleService {
     public Schedule findById(int  id);
     public void updateOrSave(Schedule schedule);
     public void deleteById(int  id);
+    public List<Schedule> findAllByDate(String s);
 }

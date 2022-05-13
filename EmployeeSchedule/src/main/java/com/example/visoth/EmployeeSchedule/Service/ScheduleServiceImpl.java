@@ -1,6 +1,7 @@
 package com.example.visoth.EmployeeSchedule.Service;
 
 import com.example.visoth.EmployeeSchedule.DAO.ScheduleDAO;
+import com.example.visoth.EmployeeSchedule.DAO.SpecificScheduleDAO;
 import com.example.visoth.EmployeeSchedule.Entity.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     @Autowired
     private ScheduleDAO scheduleDAO;
+
+    @Autowired
+    private SpecificScheduleDAO specificScheduleDAO;
 
     @Override
     public List<Schedule> findALL() {
@@ -39,5 +43,10 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public void deleteById(int  id) {
         scheduleDAO.deleteById(id);
+    }
+
+    @Override
+    public List<Schedule> findAllByDate(String s) {
+        return specificScheduleDAO.findAllByDate(s);
     }
 }

@@ -1,5 +1,8 @@
 package com.example.visoth.EmployeeSchedule.Entity;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.persistence.*;
@@ -30,16 +33,14 @@ public class User {
     @Column(name="phone_number")
     private String phoneNumber;
 
-    @ManyToMany(
+
+    @OneToMany(
+            mappedBy = "user",
             fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}
+            cascade = {CascadeType.ALL}
     )
-    @JoinTable(
-            name="schedule_user",
-            joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name="schedule_id")
-    )
-    private Set<Schedule> schedules;
+    @JsonIgnore
+    private Set<ScheduleUserTime> scheduleUserTimes;
 
     public User() {
     }
@@ -51,12 +52,12 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public void addSchedule(Schedule schedule){
-        if(schedules==null){
-            schedules=new HashSet<>();
+    public void addSchedule(ScheduleUserTime scheduleUserTime){
+        if(scheduleUserTimes==null){
+            scheduleUserTimes=new HashSet<>();
 
         }
-        schedules.add(schedule);
+        scheduleUserTimes.add(scheduleUserTime);
     }
 
     public int getId() {
@@ -99,11 +100,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public Set<Schedule> getSchedules() {
-        return schedules;
+    public Set<ScheduleUserTime> getScheduleUserTimes() {
+        return scheduleUserTimes;
     }
 
-    public void setSchedules(Set<Schedule> schedules) {
-        this.schedules = schedules;
+    public void setScheduleUserTimes(Set<ScheduleUserTime> scheduleUserTimes) {
+        this.scheduleUserTimes = scheduleUserTimes;
     }
 }

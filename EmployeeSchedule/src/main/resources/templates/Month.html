@@ -36,26 +36,37 @@
                     <tbody class="date">
                     </tbody>
                 </table>
-                <nav class="navbar navbar-light bg-ligh" >
-                    <a href="#" class="navbar-brand" ><i class="fa-solid fa-angles-left"></i></a>
-                    <a href="#" class="navbar-brand backward-month" ><i class="fa-solid fa-angle-left"></i></a>
-                    <a href="#" class="navbar-brand actual-time" ></a>
-                    <a href="#" class="navbar-brand forward-month"  ><i class="fa-solid fa-angle-right"></i></a>
-                    <a href="#" class="navbar-brand" ><i class="fa-solid fa-angles-right"></i></a>
+                <nav class="navbar navbar-light bg-light" >
+                    <a th:href="@{backwardyear(previousYear=${previousYear},previousMonth=${previousMonth},nextMonth=${nextMonth})}"
+                       class="navbar-brand" ><i class="fa-solid fa-angles-left"></i>
+                    </a>
+                    <a th:href="@{backwardmonth(previousMonth=${previousMonth},nextYear=${nextYear},previousYear=${previousYear})}"
+                       class="navbar-brand" ><i class="fa-solid fa-angle-left"></i></a>
+                    <a th:href="@{/}"  class="navbar-brand actual-time" >
+
+                    </a>
+                    <a th:href="@{forwardmonth(nextMonth=${nextMonth},nextYear=${nextYear},previousYear=${previousYear})}"
+                       class="navbar-brand"  ><i class="fa-solid fa-angle-right"></i>
+                    </a>
+                    <a th:href="@{forwardyear(nextYear=${nextYear},previousMonth=${previousMonth},nextMonth=${nextMonth})}"
+                       class="navbar-brand" ><i class="fa-solid fa-angles-right"></i>
+                    </a>
                 </nav>
             </div>
             <div class="col-8">
                 <div class="row">
                     <div class="selectDate"></div>
                 </div>
-                <div class="row">
-                    <div class="add-employee"></div>
-                </div>
                 <br>
-                <div class="row">
+                <form th:action="@{/processSchedule}" th:object="${items}" method="POST">
+                    <div class="row">
 
-                    <div class="showEmployees"></div>
-                </div>
+                        <div class="showEmployees"></div>
+                    </div>
+                    <div class="row">
+                        <div class="add-employee"></div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -69,8 +80,8 @@
                 </div>
                 <div class="modal-body">
                     <ul style="list-style-type:none;" th:each="item: ${items}">
-                        <li onclick="hasCLickEmployee(this)" data-bs-dismiss="modal" aria-label="Close">
-                            <a  class="text-dark" th:text="${item.firstName}+' '+${item.lastName}" href="#" style="text-decoration: none;">
+                        <li  data-bs-dismiss="modal" aria-label="Close">
+                            <a onclick="hasCLickEmployee(this)"  class="text-dark" th:text="${item.firstName}+' '+${item.lastName}" href="#" style="text-decoration: none;">
                             </a>
                         </li>
                     </ul>
@@ -78,8 +89,13 @@
             </div>
         </div>
     </div>
-<script src="script.js"></script>
 
-<script th:inline="javascript" src="thScript.js"></script>
+
+<script th:inline="javascript" >
+    let times =[[${times}]];
+    let schedules =[[${schedules}]];
+    let setDate=[[${currentMonth}]];
+</script>
+    <script th:src="@{/script.js}"></script>
 </body>
 </html>
