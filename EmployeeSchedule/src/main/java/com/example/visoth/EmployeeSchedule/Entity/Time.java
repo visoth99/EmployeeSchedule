@@ -5,42 +5,34 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.ArrayList;
-
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="schedule")
-public class Schedule {
+@Table(name="time")
+public class Time {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
 
-    @Column(name="date")
-    private String date;
-
-    @Column(name="note")
-    private String note;
+    @Column(name="time_hour")
+    private String timeHour;
 
     @OneToMany(
-            mappedBy = "schedule",
+            mappedBy = "time",
             fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL}
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}
     )
     @JsonIgnore
     private Set<ScheduleUserTime> scheduleUserTimes;
 
-    public Schedule() {
+    public Time() {
     }
 
-    public Schedule(String date, String note) {
-        this.date = date;
-        this.note = note;
+    public Time(String timeHour) {
+        this.timeHour = timeHour;
     }
 
     public void addScheduleUserTime(ScheduleUserTime scheduleUserTime){
@@ -51,7 +43,6 @@ public class Schedule {
         scheduleUserTimes.add(scheduleUserTime);
     }
 
-
     public int getId() {
         return id;
     }
@@ -60,25 +51,18 @@ public class Schedule {
         this.id = id;
     }
 
-    public String getDate() {
-        return date;
+    public String getTimeHour() {
+        return timeHour;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
+    public void setTimeHour(String timeHour) {
+        this.timeHour = timeHour;
     }
 
     public Set<ScheduleUserTime> getScheduleUserTimes() {
         return scheduleUserTimes;
     }
+
 
     public void setScheduleUserTimes(Set<ScheduleUserTime> scheduleUserTimes) {
         this.scheduleUserTimes = scheduleUserTimes;
