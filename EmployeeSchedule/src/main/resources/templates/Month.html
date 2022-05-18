@@ -33,7 +33,20 @@
                             <th scope="col">S</th>
                         </tr>
                     </thead>
-                    <tbody class="date">
+
+                    <tbody >
+                    <tr th:each="calendar:${calendars}">
+                        <div th:each="dayOfwWeek:${calendar.getArr()}">
+                            <div th:switch="${dayOfwWeek}">
+                                <div th:case="0">
+                                    <td th:text="''"/>
+                                </div>
+                                <div th:case="*">
+                                    <td><a href="#" onclick="createButton(this);" th:text="${dayOfwWeek}"/></td>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
                     </tbody>
                 </table>
                 <nav class="navbar navbar-light bg-light" >
@@ -55,16 +68,16 @@
             </div>
             <div class="col-8">
                 <div class="row">
-                    <div class="selectDate"></div>
+                    <div class="selectDate" ></div>
                 </div>
                 <br>
-                <form th:action="@{/processSchedule}" th:object="${items}" method="POST">
+                <form th:action="@{/processSchedule}"  method="POST">
                     <div class="row">
-
                         <div class="showEmployees"></div>
                     </div>
                     <div class="row">
-                        <div class="add-employee"></div>
+                        <div class="add-employee">
+                        </div>
                     </div>
                 </form>
             </div>
@@ -81,7 +94,7 @@
                 <div class="modal-body">
                     <ul style="list-style-type:none;" th:each="item: ${items}">
                         <li  data-bs-dismiss="modal" aria-label="Close">
-                            <a onclick="hasCLickEmployee(this)"  class="text-dark" th:text="${item.firstName}+' '+${item.lastName}" href="#" style="text-decoration: none;">
+                            <a th:value="${item.id}" onclick="hasCLickEmployee(this)"  class="text-dark" th:text="${item.firstName}+' '+${item.lastName}" href="#" style="text-decoration: none;">
                             </a>
                         </li>
                     </ul>
@@ -92,10 +105,9 @@
 
 
 <script th:inline="javascript" >
-    let times =[[${times}]];
-    let schedules =[[${schedules}]];
     let setDate=[[${currentMonth}]];
+    let times=[[${times}]];
 </script>
-    <script th:src="@{/script.js}"></script>
+    <script src="script.js"></script>
 </body>
 </html>

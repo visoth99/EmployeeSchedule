@@ -8,5 +8,17 @@
 .navbar-brand{
     margin: auto !important;
 }
+a{
+    text-decoration:none;
+    color:black;
+}
+.btn-sm{
+    float:left!important;
+    margin-right: 10px;
+}
+.badge{
+    margin-left: 5px;
+}
+
 
 

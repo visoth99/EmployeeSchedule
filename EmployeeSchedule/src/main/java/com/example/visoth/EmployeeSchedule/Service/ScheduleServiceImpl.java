@@ -49,4 +49,9 @@ public class ScheduleServiceImpl implements ScheduleService{
     public List<Schedule> findAllByDate(String s) {
         return specificScheduleDAO.findAllByDate(s);
     }
+
+    @Override
+    public Schedule findByDate(String s) {
+        return specificScheduleDAO.findByDate(s);
+    }
 }
