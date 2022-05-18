@@ -32,4 +32,20 @@ public class SpecificDateScheduleDAOImpl implements SpecificScheduleDAO {
 
         return schedules;
     }
+
+    @Override
+    public Schedule findByDate(String s) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<Schedule> query=currentSession.createQuery("from Schedule where date like :pDate",Schedule.class);
+        query.setParameter("pDate",s);
+        Schedule schedule=null;
+        try {
+            schedule=query.getSingleResult();
+
+        }catch (Exception e){
+            schedule=null;
+        }
+
+        return schedule;
+    }
 }
