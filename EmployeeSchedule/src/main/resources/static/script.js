@@ -3,7 +3,8 @@ const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Sa
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 let selectArr=[];
 let selectEmployeeArr=[];
-let count=0;
+let employeeName=[];
+let count=1;
 let isCheck=false;
 
 let input=document.createElement("input");
@@ -50,8 +51,11 @@ function createButton(x){
         const btn=document.createElement("button");
         const addBtn=document.createElement("button");
 
-        btn.setAttribute("type","submit");
+        btn.setAttribute("type","button");
         btn.setAttribute("class","btn btn-primary");
+        btn.setAttribute("data-bs-toggle","modal");
+        btn.setAttribute("data-bs-target","#verifyUp");
+        btn.setAttribute("onclick","verifyInfo()");
         btn.innerHTML="Create Schedule";
 
         addBtn.setAttribute("type","button");
@@ -60,8 +64,6 @@ function createButton(x){
         addBtn.setAttribute("data-bs-target","#popup");
         addBtn.innerHTML="Add Employee";
 
-        div.appendChild(input);
-        div.appendChild(input_em);
         div.appendChild(addBtn);
         div.appendChild(btn);
         isCheck=true;
@@ -83,8 +85,14 @@ function removeMe(x){
         while (re.hasChildNodes()) {
             re.removeChild(re.lastChild);
         }
+        const rt = document.querySelector(".verify-info");
+        while (rt.hasChildNodes()) {
+            rt.removeChild(rt.lastChild);
+        }
         isCheck=false;
+        selectEmployeeArr=[];
     }
+    input_em.setAttribute("value",selectEmployeeArr.toString());
     input.setAttribute("value",selectArr.toString());
 }
 
@@ -120,6 +128,7 @@ function to(x){
     const s=selectEmployeeArr[o].split(":");
     selectEmployeeArr[o]=s[0]+":"+s[1]+":"+x.value;
     input_em.setAttribute("value",selectEmployeeArr.toString());
+
 }
 
 function removeRow(x){
@@ -129,11 +138,16 @@ function removeRow(x){
     if(o>-1){
         selectEmployeeArr.splice(o,1);
     }
+    const q=employeeName.findIndex(y=>y.includes(x.getAttribute('id')));
+    if(q>-1){
+        employeeName.splice(q,1);
+    }
     input_em.setAttribute("value",selectEmployeeArr.toString());
 }
 
 function hasCLickEmployee(x){
 
+    employeeName.push(x.innerHTML+"-"+x.getAttribute('value'));
 
     const div=document.querySelector(".showEmployees");
     const row=document.createElement("div");
@@ -147,6 +161,7 @@ function hasCLickEmployee(x){
     createBdg.setAttribute("style","float:left!important; margin-top:5px;");
     createBdg.setAttribute("onclick","removeRow(this)");
     createBdg.setAttribute("value",count.toString()+"-"+x.getAttribute('value'));
+    createBdg.setAttribute("id",x.innerHTML+"-"+x.getAttribute('value'));
     createBdg.innerHTML = "X";
 
     row.setAttribute("class","row");
@@ -171,5 +186,82 @@ function hasCLickEmployee(x){
     selectEmployeeArr.push(count+"-"+x.getAttribute('value')+":0:0")
     input_em.setAttribute("value",selectEmployeeArr.toString());
     count++;
+}
+
+function verifyInfo(){
+    const div=document.querySelector(".verify-info");
+    const div0=document.querySelector(".list-info");
+    const row=document.createElement("div");
+    const col1=document.createElement("div");
+    const col2=document.createElement("div");
+    const row1=document.createElement("div");
+    const col11=document.createElement("div");
+    const col22=document.createElement("div");
+
+    const dateTitle=document.createElement("p");
+    const emTitle=document.createElement("p");
+
+    while (div0.hasChildNodes()) {
+        div0.removeChild(div0.lastChild);
+    }
+
+    row.setAttribute("class","row");
+    col1.setAttribute("class","col-4");
+    col2.setAttribute("class","col-8");
+
+    row1.setAttribute("class","row");
+    col11.setAttribute("class","col-4");
+    col22.setAttribute("class","col-8");
+
+    dateTitle.setAttribute("style","float:left!important;");
+    dateTitle.innerHTML="For the Week of: ";
+    emTitle.setAttribute("style","float:left!important;");
+    emTitle.innerHTML="Employee Name: ";
+
+    col1.appendChild(dateTitle);
+    row.appendChild(col1);
+
+    col11.appendChild(emTitle);
+    row1.appendChild(col11);
+
+    try {
+
+        for (let i = 0; i < selectArr.length; i++) {
+            const c = document.createElement("span");
+            c.setAttribute("class", selectArr[i] + " badge bg-secondary");
+            const s = selectArr[i].split(" ");
+            c.innerHTML = months[s[0] - 1] + " " + s[1] + " " + s[2];
+            col2.appendChild(c);
+        }
+        for (let j = 0; j < selectEmployeeArr.length; j++) {
+            const c = document.createElement("p");
+            c.setAttribute("class", selectEmployeeArr[j]);
+            const s = selectEmployeeArr[j].split(":");
+            const f = times.find(e => e.id == s[1]);
+            const t = times.find(e => e.id == s[2]);
+            const e=employeeName[j].split("-");
+            c.innerHTML =e[0] + " :    " + f.timeHour + " - " + t.timeHour;
+            col22.appendChild(c);
+        }
+    }catch (e){
+        while (col22.hasChildNodes()) {
+            col22.removeChild(col22.lastChild);
+        }
+    }
+    if(!col22.hasChildNodes()){
+        const msg=document.createElement("p");
+        msg.innerHTML="Your Schedule will not created because you did not add employees or specify shift times to " +
+            "your schedule."
+        msg.setAttribute("style","color: red !important;")
+        row1.appendChild(msg);
+    }
+    row1.appendChild(col22);
+
+    row.appendChild(col2);
+    div0.appendChild(row);
+    div0.appendChild(row1);
+
+    div.appendChild(input);
+    div.appendChild(input_em);
 }
 

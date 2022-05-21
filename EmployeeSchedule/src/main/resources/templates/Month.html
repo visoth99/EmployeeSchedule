@@ -71,15 +71,13 @@
                     <div class="selectDate" ></div>
                 </div>
                 <br>
-                <form th:action="@{/processSchedule}"  method="POST">
-                    <div class="row">
-                        <div class="showEmployees"></div>
+                <div class="row">
+                    <div class="showEmployees"></div>
+                </div>
+                <div class="row">
+                    <div class="add-employee">
                     </div>
-                    <div class="row">
-                        <div class="add-employee">
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -88,7 +86,7 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Employee List</h5>
+                    <h5 class="modal-title" id="popup1">Employee List</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -98,6 +96,28 @@
                             </a>
                         </li>
                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="verifyUp" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verifyUp1">Verify Your Schedule</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-info">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <form th:action="@{/processSchedule}"  method="POST">
+                        <div class="verify-info">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Done</button>
+                    </form>
                 </div>
             </div>
         </div>

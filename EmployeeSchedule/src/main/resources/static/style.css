@@ -18,6 +18,7 @@ a{
 }
 .badge{
     margin-left: 5px;
+    float:left !important;
 }
 
 
