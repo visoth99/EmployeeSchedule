@@ -1,15 +1,15 @@
 # EmployeeSchedule
 Providing a web page that allows small business owners or local managers build schedules for their  workplace, built with Java, JavaScript, ThymeLeaf, HTML,BootStrap 5, and CSS.
 
-## Project Status
+## Project Status:
 This project is currently in development. Users can build schedules base on calendar, and also users need to register employees information.
 
-## Project Screenshot(s)
+## Project Screenshot(s):
 ![`](https://user-images.githubusercontent.com/73359451/170911014-efa7c9b3-92dd-4119-a40b-b7a0d657d870.png)
 ![2](https://user-images.githubusercontent.com/73359451/170911021-f23d4cd7-a314-4262-9efe-408422e72540.png)
 ![3](https://user-images.githubusercontent.com/73359451/170911022-c42022c6-4a6f-4050-86de-35eb0b5320d3.png)
 
-## Installation and Setup Instructions
+## Installation and Setup Instructions:
 Clone down this reposority. You will need  MySQL, Tomcat or IntelliJ Ultimate, and JDK 13 or above. 
 
 **** Set up Database: go to SQL script directory in the main project directory, log into MySQL then create tables and insert values into time table.
