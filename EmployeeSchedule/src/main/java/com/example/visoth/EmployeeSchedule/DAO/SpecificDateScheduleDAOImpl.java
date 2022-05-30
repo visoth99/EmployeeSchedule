@@ -17,11 +17,12 @@ public class SpecificDateScheduleDAOImpl implements SpecificScheduleDAO {
     private EntityManager entityManager;
 
     @Override
-    public List<Schedule> findAllByDate(String s) {
+    public List<Schedule> findAllByDate(String m, String y) {
 
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Schedule> query=currentSession.createQuery("from Schedule where date like :pDate",Schedule.class);
-        query.setParameter("pDate","%"+s+"%");
+        Query<Schedule> query=currentSession.createQuery("from Schedule where date like :mDate and date like :yDate",Schedule.class);
+        query.setParameter("mDate",m+"%");
+        query.setParameter("yDate","%"+y);
         List<Schedule> schedules=null;
         try {
             schedules=query.getResultList();
@@ -36,7 +37,7 @@ public class SpecificDateScheduleDAOImpl implements SpecificScheduleDAO {
     @Override
     public Schedule findByDate(String s) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Schedule> query=currentSession.createQuery("from Schedule where date like :pDate",Schedule.class);
+        Query<Schedule> query=currentSession.createQuery("from Schedule where date=:pDate",Schedule.class);
         query.setParameter("pDate",s);
         Schedule schedule=null;
         try {

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SpecificScheduleDAO {
 
-    public List<Schedule> findAllByDate(String s);
+    public List<Schedule> findAllByDate(String m,String y);
 
     public Schedule findByDate(String s);
 }

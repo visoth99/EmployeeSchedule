@@ -1,5 +1,6 @@
 package com.example.visoth.EmployeeSchedule.Service;
 
+import com.example.visoth.EmployeeSchedule.DAO.SpecificUserDAO;
 import com.example.visoth.EmployeeSchedule.DAO.UserDAO;
 import com.example.visoth.EmployeeSchedule.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;
 
+    @Autowired
+    private SpecificUserDAO specificUserDAO;
 
     @Override
     public List<User> findALL() {
@@ -40,5 +43,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(int id) {
         userDAO.deleteById(id);
+    }
+
+    @Override
+    public User findByEmail(String s) {
+        return specificUserDAO.findByEmail(s);
     }
 }

@@ -10,4 +10,5 @@ public interface UserService {
     public User findById(int id);
     public void updateOrSave(User user);
     public void deleteById(int id);
+    public User findByEmail(String s);
 }

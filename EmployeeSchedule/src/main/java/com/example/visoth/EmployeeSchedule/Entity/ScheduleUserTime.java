@@ -19,16 +19,21 @@ public class ScheduleUserTime {
     private User user;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="time_id")
-    private Time time;;
+    @JoinColumn(name="from_id")
+    private Time to;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="to_id")
+    private Time from;
 
     public ScheduleUserTime() {
     }
 
-    public ScheduleUserTime(Schedule schedule, User user, Time time) {
+    public ScheduleUserTime(Schedule schedule, User user, Time to, Time from) {
         this.schedule = schedule;
         this.user = user;
-        this.time = time;
+        this.to = to;
+        this.from = from;
     }
 
     public int getId() {
@@ -55,11 +60,19 @@ public class ScheduleUserTime {
         this.user = user;
     }
 
-    public Time getTime() {
-        return time;
+    public Time getTo() {
+        return to;
     }
 
-    public void setTime(Time time) {
-        this.time = time;
+    public void setTo(Time to) {
+        this.to = to;
+    }
+
+    public Time getFrom() {
+        return from;
+    }
+
+    public void setFrom(Time from) {
+        this.from = from;
     }
 }
