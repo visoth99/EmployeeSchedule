@@ -4,21 +4,27 @@
     margin: 5px 5px 5px 5px !important;
     text-align: left;
 }
-
-.navbar-brand{
-    margin: auto !important;
+.nnav{
+    margin-left:10px!important;
 }
+
 a{
     text-decoration:none;
     color:black;
 }
 .btn-sm{
     float:left!important;
-    margin-right: 10px;
+    margin: 10px;
+}
+.btn-primary, .btn-secondary{
+    font-weight: bold;
+    margin: 10px;
+}
+.row-show{
+    margin-bottom: 10px;
 }
 .badge{
     margin-left: 5px;
-    float:left !important;
 }
 
 

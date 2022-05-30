@@ -21,7 +21,6 @@ public class Time {
     private String timeHour;
 
     @OneToMany(
-            mappedBy = "time",
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}
     )

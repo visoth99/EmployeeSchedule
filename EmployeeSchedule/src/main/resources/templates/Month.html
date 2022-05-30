@@ -17,6 +17,19 @@
 
 </head>
 <body>
+<div class="row ">
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-primary">
+        <ul class="container navbar-nav justify-content-start">
+            <li class="nav-item">
+                <a class="navbar-brand" th:href="@{/}" style="margin-left: 10px !important;"><strong>Home</strong></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/EditEmployeeList}" style="margin-left: 10px !important;">Edit Employee List</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<br><br><br>
     <div class="container text-center" >
         <div class="row">
             <div class=" col-4" >
@@ -42,7 +55,7 @@
                                     <td th:text="''"/>
                                 </div>
                                 <div th:case="*">
-                                    <td><a href="#" onclick="createButton(this);" th:text="${dayOfwWeek}"/></td>
+                                    <td th:class="'td-'+${dayOfwWeek}"><a th:value="${dayOfwWeek}" href="#" onclick="createButton(this);" th:text="${dayOfwWeek}"/></td>
                                 </div>
                             </div>
                         </div>
@@ -51,18 +64,18 @@
                 </table>
                 <nav class="navbar navbar-light bg-light" >
                     <a th:href="@{backwardyear(previousYear=${previousYear},previousMonth=${previousMonth},nextMonth=${nextMonth})}"
-                       class="navbar-brand" ><i class="fa-solid fa-angles-left"></i>
+                       class="navbar-brand nnav" ><i class="fa-solid fa-angles-left"></i>
                     </a>
                     <a th:href="@{backwardmonth(previousMonth=${previousMonth},nextYear=${nextYear},previousYear=${previousYear})}"
-                       class="navbar-brand" ><i class="fa-solid fa-angle-left"></i></a>
-                    <a th:href="@{/}"  class="navbar-brand actual-time" >
+                       class="navbar-brand nnav" ><i class="fa-solid fa-angle-left"></i></a>
+                    <a th:href="@{/}"  class="navbar-brand actual-time nnav" >
 
                     </a>
                     <a th:href="@{forwardmonth(nextMonth=${nextMonth},nextYear=${nextYear},previousYear=${previousYear})}"
-                       class="navbar-brand"  ><i class="fa-solid fa-angle-right"></i>
+                       class="navbar-brand nnav"  ><i class="fa-solid fa-angle-right"></i>
                     </a>
                     <a th:href="@{forwardyear(nextYear=${nextYear},previousMonth=${previousMonth},nextMonth=${nextMonth})}"
-                       class="navbar-brand" ><i class="fa-solid fa-angles-right"></i>
+                       class="navbar-brand nnav" ><i class="fa-solid fa-angles-right"></i>
                     </a>
                 </nav>
             </div>
@@ -127,6 +140,7 @@
 <script th:inline="javascript" >
     let setDate=[[${currentMonth}]];
     let times=[[${times}]];
+    let dateSchedules=[[${schedules}]];
 </script>
     <script src="script.js"></script>
 </body>

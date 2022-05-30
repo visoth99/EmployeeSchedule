@@ -6,6 +6,7 @@ let selectEmployeeArr=[];
 let employeeName=[];
 let count=1;
 let isCheck=false;
+let isEmpty=false;
 
 let input=document.createElement("input");
 input.setAttribute("type","hidden");
@@ -19,19 +20,99 @@ input_em.setAttribute("value",selectEmployeeArr.toString());
 input_em.setAttribute("name","s2");
 input_em.setAttribute("class","form-control");
 
-
-
 const fixedDate=new Date();
 document.querySelector(".actual-time").innerHTML=weekday[fixedDate.getDay()]+", "+
     months[fixedDate.getMonth()]+" "+fixedDate.getDate();
 
+for(let k=0;k<dateSchedules.length;k++){
+
+    const s=dateSchedules[k].split(" ");
+    const ss=s[2].split(":");
+    const y=".td-"+ss[0];
+    const x=document.querySelector(y);
+    x.style.backgroundColor="lightgray";
+}
+
 var m=new Date(setDate);
 document.querySelector(".current-time").innerHTML=months[m.getMonth()]+"  "+m.getFullYear();
 
+if(fixedDate.getMonth()==m.getMonth() && fixedDate.getFullYear()==m.getFullYear()){
+    const y=".td-"+fixedDate.getDate();
+    const x=document.querySelector(y).firstChild;
+    const i=document.createElement("i");
+    x.innerHTML="";
+    i.setAttribute("class", "fa-solid fa-bowl-rice");
+    x.appendChild(i);
+}
+
 function createButton(x){
-    const d=new Date(new Date(months[m.getMonth()]+" ,"+x.innerHTML+" "+m.getFullYear()));
-    if(!selectArr.includes(m.getMonth()+1 + " " + x.innerHTML + " " + m.getFullYear())) {
-        selectArr.push(m.getMonth()+1 + " " + x.innerHTML + " " + m.getFullYear());
+    if(dateSchedules.some(e=>e.includes(" "+x.getAttribute('value') + ":" + m.getFullYear()+" "))){
+        removeChildAll();
+        viewDataDate(x);
+    }else {
+        precessEmptyDates(x);
+    }
+}
+
+function viewDataDate(x){
+    const getRow = document.querySelector(".showEmployees");
+    const showDate = document.querySelector(".selectDate");
+    const span=document.createElement("span");
+    const f=x.getAttribute('value');
+    span.setAttribute("class","btn btn-secondary btn-sm");
+    span.setAttribute("style","margin-top:10px;")
+    showDate.appendChild(span);
+    span.innerHTML=weekday[m.getDay()]+", "+months[m.getMonth()]+" "+f+" "+m.getFullYear();
+    for(let k=0;k<dateSchedules.length;k++){
+        if(dateSchedules[k].includes(" "+f + ":" + m.getFullYear()+" ")){
+            const div=document.createElement("div");
+            div.setAttribute("class","card");
+            const div1=document.createElement("div");
+            div1.setAttribute("class","card-body");
+            const h5=document.createElement("h5");
+            h5.setAttribute("class","card-title");
+            const title=dateSchedules[k].toString().split(" ");
+            h5.innerHTML=title[0]+" "+title[1];
+            const h6=document.createElement("h6");
+            h6.setAttribute("class","card-subtitle mb-2 text-muted");
+            const title_h6=dateSchedules[k].toString().split(" ");
+            h6.innerHTML=title_h6[3]+" "+title_h6[4]+" - "+title_h6[5]+" "+title_h6[6];
+            const p=document.createElement("p");
+            p.setAttribute("class","card-text");
+            const p_phone=dateSchedules[k].toString().split(" ");
+            let p_char='';
+            for(let i=0;i<p_phone[7].length;i++){
+                if(i==0)p_char+='(';
+                else if(i==3)p_char+=') ';
+                else if(i==6)p_char+='- ';
+                p_char+=p_phone[7].charAt(i);
+            }
+            p.innerHTML=p_char;
+            div1.appendChild(h5);
+            div1.appendChild(h6)
+            div1.appendChild(p);
+            div.appendChild(div1);
+            getRow.appendChild(div);
+        }
+    }
+    isEmpty=true;
+    selectArr=[];
+    selectEmployeeArr=[];
+    isCheck=false;
+    input_em.setAttribute("value",selectEmployeeArr.toString());
+    input.setAttribute("value",selectArr.toString());
+}
+
+function precessEmptyDates(x){
+
+    if(isEmpty){
+        removeChildAll();
+        isEmpty=false;
+    }
+    const f=x.getAttribute('value');
+    const d=new Date(new Date(months[m.getMonth()]+" ,"+f+" "+m.getFullYear()));
+    if(!selectArr.includes(m.getMonth()+1 + " " + f + " " + m.getFullYear())) {
+        selectArr.push(m.getMonth()+1 + " " + f + " " + m.getFullYear());
         const getRow = document.querySelector(".selectDate");
         const createBtn = document.createElement("button");
         const createBdg = document.createElement("span");
@@ -39,9 +120,9 @@ function createButton(x){
         createBdg.innerHTML = "X";
         createBtn.setAttribute("onclick", "removeMe(this);");
         createBtn.setAttribute("type", "button");
-        createBtn.setAttribute("value",m.getMonth()+1 + " " + x.innerHTML + " " + m.getFullYear());
+        createBtn.setAttribute("value",m.getMonth()+1 + " " + f + " " + m.getFullYear());
         createBtn.setAttribute("class", "btn btn-secondary btn-sm");
-        createBtn.innerHTML = weekday[d.getDay()] + " " + x.innerHTML;
+        createBtn.innerHTML = weekday[d.getDay()] + " " + f;
         createBtn.appendChild(createBdg);
         getRow.appendChild(createBtn);
         input.setAttribute("value",selectArr.toString());
@@ -70,6 +151,26 @@ function createButton(x){
     }
 }
 
+function removeChildAll(){
+
+    const rs = document.querySelector(".selectDate");
+    while (rs.hasChildNodes()) {
+        rs.removeChild(rs.lastChild);
+    }
+    const rw = document.querySelector(".showEmployees");
+    while (rw.hasChildNodes()) {
+        rw.removeChild(rw.lastChild);
+    }
+    const re = document.querySelector(".add-employee");
+    while (re.hasChildNodes()) {
+        re.removeChild(re.lastChild);
+    }
+    const rt = document.querySelector(".verify-info");
+    while (rt.hasChildNodes()) {
+        rt.removeChild(rt.lastChild);
+    }
+}
+
 function removeMe(x){
     x.remove();
     const o=selectArr.indexOf(x.value);
@@ -77,18 +178,7 @@ function removeMe(x){
         selectArr.splice(o,1);
     }
     if(selectArr.length==0) {
-        const rw = document.querySelector(".showEmployees");
-        while (rw.hasChildNodes()) {
-            rw.removeChild(rw.lastChild);
-        }
-        const re = document.querySelector(".add-employee");
-        while (re.hasChildNodes()) {
-            re.removeChild(re.lastChild);
-        }
-        const rt = document.querySelector(".verify-info");
-        while (rt.hasChildNodes()) {
-            rt.removeChild(rt.lastChild);
-        }
+        removeChildAll();
         isCheck=false;
         selectEmployeeArr=[];
     }
@@ -155,16 +245,20 @@ function hasCLickEmployee(x){
     const col2=document.createElement("div");
     const col3=document.createElement("div");
     const col4=document.createElement("div");
+    const a=document.createElement("a");
     const createBdg = document.createElement("span");
+
+    a.setAttribute("href","#");
+    a.setAttribute("value",count.toString()+"-"+x.getAttribute('value'));
+    a.setAttribute("id",x.innerHTML+"-"+x.getAttribute('value'));
+    a.setAttribute("onclick","removeRow(this)");
 
     createBdg.setAttribute("class", "badge bg-secondary text-light");
     createBdg.setAttribute("style","float:left!important; margin-top:5px;");
-    createBdg.setAttribute("onclick","removeRow(this)");
-    createBdg.setAttribute("value",count.toString()+"-"+x.getAttribute('value'));
-    createBdg.setAttribute("id",x.innerHTML+"-"+x.getAttribute('value'));
+
     createBdg.innerHTML = "X";
 
-    row.setAttribute("class","row");
+    row.setAttribute("class","row row-show");
 
     col1.setAttribute("class","col");
     col1.innerHTML=x.innerHTML;
@@ -173,7 +267,8 @@ function hasCLickEmployee(x){
     col3.setAttribute("class","col");
 
     col4.setAttribute("class","col");
-    col4.appendChild(createBdg);
+    a.appendChild(createBdg);
+    col4.appendChild(a);
 
     createSelect(col2,"from",count,x.getAttribute('value'));
     createSelect(col3,"to",count,x.getAttribute('value'));
@@ -250,9 +345,10 @@ function verifyInfo(){
     }
     if(!col22.hasChildNodes()){
         const msg=document.createElement("p");
+        msg.setAttribute("class","text-center");
         msg.innerHTML="Your Schedule will not created because you did not add employees or specify shift times to " +
             "your schedule."
-        msg.setAttribute("style","color: red !important;")
+        msg.setAttribute("style","color: red !important;");
         row1.appendChild(msg);
     }
     row1.appendChild(col22);

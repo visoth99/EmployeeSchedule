@@ -1,6 +1,7 @@
 package com.example.visoth.EmployeeSchedule.Service;
 
 import com.example.visoth.EmployeeSchedule.DAO.EntitiesDAO;
+import com.example.visoth.EmployeeSchedule.DAO.SpecificEntitiesDAO;
 import com.example.visoth.EmployeeSchedule.Entity.ScheduleUserTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ public class EntityServiceImpl implements EntityLinkService{
 
     @Autowired
     private EntitiesDAO entitiesDAO;
+
+    @Autowired
+    private SpecificEntitiesDAO specificEntitiesDAO;
 
     @Override
     public List<ScheduleUserTime> findALL() {
@@ -40,4 +44,11 @@ public class EntityServiceImpl implements EntityLinkService{
     public void deleteById(int id) {
         entitiesDAO.deleteById(id);
     }
+
+    @Override
+    public List<ScheduleUserTime> findAllByScheduleId(int d) {
+        return specificEntitiesDAO.findAllByScheduleId(d);
+    }
+
+
 }
