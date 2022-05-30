@@ -1,5 +1,5 @@
 # EmployeeSchedule
-Providing a web page that allows small business owners or local managers build schedules for their  workplace, built with Java, JavaScript, ThymeLeaf, HTML,BootStrao 5, and CSS.
+Providing a web page that allows small business owners or local managers build schedules for their  workplace, built with Java, JavaScript, ThymeLeaf, HTML,BootStrap 5, and CSS.
 
 ## Project Status
 This project is currently in development. Users can build schedules base on calendar, and also users need to register employees information.
